@@ -2,8 +2,6 @@
 -- Model: New Model    Version: 1.0
 -- MySQL Workbench Forward Engineering
 
--- Versão Inicial
-
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
@@ -22,6 +20,8 @@ USE `DMs_Locacao` ;
 -- -----------------------------------------------------
 -- Table `DMs_Locacao`.`Dim_data`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `DMs_Locacao`.`Dim_data` ;
+
 CREATE TABLE IF NOT EXISTS `DMs_Locacao`.`Dim_data` (
   `idDim_data` INT NOT NULL,
   `dia` INT NULL,
@@ -32,8 +32,35 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `DMs_Locacao`.`Dim_funcionario`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `DMs_Locacao`.`Dim_funcionario` ;
+
+CREATE TABLE IF NOT EXISTS `DMs_Locacao`.`Dim_funcionario` (
+  `idDim_funcionario` INT NOT NULL,
+  `nome` VARCHAR(100) NULL,
+  `cargo` VARCHAR(45) NULL,
+  PRIMARY KEY (`idDim_funcionario`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `DMs_Locacao`.`Dim_opicionais`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `DMs_Locacao`.`Dim_opicionais` ;
+
+CREATE TABLE IF NOT EXISTS `DMs_Locacao`.`Dim_opicionais` (
+  `idDim_opicionais` INT NOT NULL,
+  `descricao` VARCHAR(45) NULL,
+  PRIMARY KEY (`idDim_opicionais`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `DMs_Locacao`.`Dim_locacao`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `DMs_Locacao`.`Dim_locacao` ;
+
 CREATE TABLE IF NOT EXISTS `DMs_Locacao`.`Dim_locacao` (
   `idDim_locacao` INT NOT NULL,
   `valor` DECIMAL(10,2) NULL,
@@ -41,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `DMs_Locacao`.`Dim_locacao` (
   `data_fim` DATE NULL,
   `km_inicio` INT NULL,
   `km_fim` INT NULL,
+  `contemOpcional` TINYINT NULL,
   PRIMARY KEY (`idDim_locacao`))
 ENGINE = InnoDB;
 
@@ -48,6 +76,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `DMs_Locacao`.`Dim_veiculo`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `DMs_Locacao`.`Dim_veiculo` ;
+
 CREATE TABLE IF NOT EXISTS `DMs_Locacao`.`Dim_veiculo` (
   `idDim_veiculo` INT NOT NULL,
   `modelo` VARCHAR(45) NULL,
@@ -60,55 +90,28 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `DMs_Locacao`.`Dim_funcionario`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DMs_Locacao`.`Dim_funcionario` (
-  `idDim_funcionario` INT NOT NULL,
-  `nome` VARCHAR(100) NULL,
-  `cargo` VARCHAR(45) NULL,
-  PRIMARY KEY (`idDim_funcionario`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `DMs_Locacao`.`Dim_opicionais`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DMs_Locacao`.`Dim_opicionais` (
-  `idDim_opicionais` INT NOT NULL,
-  `descricao` VARCHAR(45) NULL,
-  PRIMARY KEY (`idDim_opicionais`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `DMs_Locacao`.`Fato`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `DMs_Locacao`.`Fato` ;
+
 CREATE TABLE IF NOT EXISTS `DMs_Locacao`.`Fato` (
   `idFato` INT NOT NULL,
   `Dim_data_idDim_data` INT NOT NULL,
-  `Dim_locacao_idDim_locacao` INT NOT NULL,
-  `Dim_veiculo_idDim_veiculo` INT NOT NULL,
   `Dim_funcionario_idDim_funcionario` INT NOT NULL,
   `Dim_opicionais_idDim_opicionais` INT NOT NULL,
-  PRIMARY KEY (`idFato`, `Dim_data_idDim_data`, `Dim_locacao_idDim_locacao`, `Dim_veiculo_idDim_veiculo`, `Dim_funcionario_idDim_funcionario`, `Dim_opicionais_idDim_opicionais`),
+  `Dim_locacao_idDim_locacao` INT NOT NULL,
+  `Dim_veiculo_idDim_veiculo` INT NOT NULL,
+  `qtdDiasLocacao` INT NULL,
+  `kmsLocacao` INT NULL,
+  PRIMARY KEY (`idFato`, `Dim_data_idDim_data`, `Dim_funcionario_idDim_funcionario`, `Dim_opicionais_idDim_opicionais`, `Dim_veiculo_idDim_veiculo`, `Dim_locacao_idDim_locacao`),
   INDEX `fk_Fato_Dim_data1_idx` (`Dim_data_idDim_data` ASC) VISIBLE,
-  INDEX `fk_Fato_Dim_locacao1_idx` (`Dim_locacao_idDim_locacao` ASC) VISIBLE,
-  INDEX `fk_Fato_Dim_veiculo1_idx` (`Dim_veiculo_idDim_veiculo` ASC) VISIBLE,
   INDEX `fk_Fato_Dim_funcionario1_idx` (`Dim_funcionario_idDim_funcionario` ASC) VISIBLE,
   INDEX `fk_Fato_Dim_opicionais1_idx` (`Dim_opicionais_idDim_opicionais` ASC) VISIBLE,
+  INDEX `fk_Fato_Dim_locacao1_idx` (`Dim_locacao_idDim_locacao` ASC) VISIBLE,
+  INDEX `fk_Fato_Dim_veiculo1_idx` (`Dim_veiculo_idDim_veiculo` ASC) VISIBLE,
   CONSTRAINT `fk_Fato_Dim_data1`
     FOREIGN KEY (`Dim_data_idDim_data`)
     REFERENCES `DMs_Locacao`.`Dim_data` (`idDim_data`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Fato_Dim_locacao1`
-    FOREIGN KEY (`Dim_locacao_idDim_locacao`)
-    REFERENCES `DMs_Locacao`.`Dim_locacao` (`idDim_locacao`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Fato_Dim_veiculo1`
-    FOREIGN KEY (`Dim_veiculo_idDim_veiculo`)
-    REFERENCES `DMs_Locacao`.`Dim_veiculo` (`idDim_veiculo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Fato_Dim_funcionario1`
@@ -119,6 +122,16 @@ CREATE TABLE IF NOT EXISTS `DMs_Locacao`.`Fato` (
   CONSTRAINT `fk_Fato_Dim_opicionais1`
     FOREIGN KEY (`Dim_opicionais_idDim_opicionais`)
     REFERENCES `DMs_Locacao`.`Dim_opicionais` (`idDim_opicionais`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Fato_Dim_locacao1`
+    FOREIGN KEY (`Dim_locacao_idDim_locacao`)
+    REFERENCES `DMs_Locacao`.`Dim_locacao` (`idDim_locacao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Fato_Dim_veiculo1`
+    FOREIGN KEY (`Dim_veiculo_idDim_veiculo`)
+    REFERENCES `DMs_Locacao`.`Dim_veiculo` (`idDim_veiculo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

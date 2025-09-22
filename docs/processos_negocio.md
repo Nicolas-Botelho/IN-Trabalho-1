@@ -11,6 +11,7 @@
 - Percentual de locação com itens opcionais.
 - Identificação dos itens opcionais mais requisitados por tipo de veículos alugados
 - Quantia vendida por funcionário (considerando aluguel de opcionais e veículo) para um período informado.
+
 ## Manutenção de Veículos
 - Custo total de manutenção por um período de tempo.
 - Custo médio de manutenção por veículo.
@@ -20,11 +21,11 @@
 - Quantos dias por ano cada veículo fica indisponível para manutenção?
 
 # Diagrama
-## Cliente e Funcionario
+## Cliente e Funcionario (Posição: esquerda superior)
 ![cliente e funcionario](./img/0_cliente_e_funcionario.png)
-## Locação
+## Locação (Posição: direira superior)
 ![locacao](./img/1_locacao.png)
-## Manutenção
+## Manutenção (Posição: esquerda inferior)
 ![manutencao](./img/2_manutencao.png)
-## Veículo
+## Veículo (Posição: direira inferior)
 ![veiculo](./img/3_veiculo.png)
