@@ -22,10 +22,10 @@
 
 # Diagrama
 ## Cliente e Funcionario (Posição: esquerda superior)
-![cliente e funcionario](./img/0_cliente_e_funcionario.png)
+![cliente e funcionario](../img/0_cliente_e_funcionario.png)
 ## Locação (Posição: direira superior)
-![locacao](./img/1_locacao.png)
+![locacao](../img/1_locacao.png)
 ## Manutenção (Posição: esquerda inferior)
-![manutencao](./img/2_manutencao.png)
+![manutencao](../img/2_manutencao.png)
 ## Veículo (Posição: direira inferior)
-![veiculo](./img/3_veiculo.png)
+![veiculo](../img/3_veiculo.png)

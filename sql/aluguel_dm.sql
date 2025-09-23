@@ -9,7 +9,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema DMs_Locacao
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `DMs_Locacao` ;
 
 -- -----------------------------------------------------
 -- Schema DMs_Locacao
@@ -68,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `DMs_Locacao`.`Dim_locacao` (
   `data_fim` DATE NULL,
   `km_inicio` INT NULL,
   `km_fim` INT NULL,
-  `contemOpcional` TINYINT NULL,
+  `contem_opcional` TINYINT NULL,
   PRIMARY KEY (`idDim_locacao`))
 ENGINE = InnoDB;
 
@@ -101,8 +100,8 @@ CREATE TABLE IF NOT EXISTS `DMs_Locacao`.`Fato` (
   `Dim_opicionais_idDim_opicionais` INT NOT NULL,
   `Dim_locacao_idDim_locacao` INT NOT NULL,
   `Dim_veiculo_idDim_veiculo` INT NOT NULL,
-  `qtdDiasLocacao` INT NULL,
-  `kmsLocacao` INT NULL,
+  `qtd_dias_locacao` INT NULL,
+  `kms_locacao` INT NULL,
   PRIMARY KEY (`idFato`, `Dim_data_idDim_data`, `Dim_funcionario_idDim_funcionario`, `Dim_opicionais_idDim_opicionais`, `Dim_veiculo_idDim_veiculo`, `Dim_locacao_idDim_locacao`),
   INDEX `fk_Fato_Dim_data1_idx` (`Dim_data_idDim_data` ASC) VISIBLE,
   INDEX `fk_Fato_Dim_funcionario1_idx` (`Dim_funcionario_idDim_funcionario` ASC) VISIBLE,
