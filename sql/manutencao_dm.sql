@@ -25,13 +25,32 @@ USE `DMs_Locacao` ;
 DROP TABLE IF EXISTS `DMs_Locacao`.`Dim_data` ;
 
 CREATE TABLE IF NOT EXISTS `DMs_Locacao`.`Dim_data` (
-  `idDim_data` INT NOT NULL,
-  `dia` INT NULL DEFAULT NULL,
-  `mes` INT NULL DEFAULT NULL,
-  `ano` INT NULL DEFAULT NULL,
-  PRIMARY KEY (`idDim_data`))
+  `idDim_data` smallint not null,
+  `full_date` date,
+  `day_of_week` tinyint,
+  `day_num_in_month` tinyint,
+  `day_num_overall` smallint,
+  `day_name` varchar(9),
+  `day_abbrev` char(3),
+  `weekday_flag` char(1),
+  `week_num_in_year` tinyint,
+  `week_num_overall` smallint,
+  `week_begin_date` date, 
+  `week_begin_idDim_data` smallint,
+  `month` tinyint,
+  `month_num_overall` smallint,
+  `month_name` varchar(9),
+  `month_abbrev` char(3),
+  `quarter` tinyint,
+  `year` smallint,
+  `yearmo` int,
+  `fiscal_month` tinyint,
+  `fiscal_quarter` tinyint,
+  `fiscal_year` smallint,
+  `last_day_in_month_flag` char(1),
+  `same_day_year_ago_date` date,
+  primary key (`idDim_data`))
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `DMs_Locacao`.`Dim_veiculo`
