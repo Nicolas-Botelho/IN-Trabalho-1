@@ -8,6 +8,15 @@ O script foi criado através do MySQL Workbench usando o processo de Forward Eng
 Para o banco ser acessado foi usada a imagem oficial do MySQL 8 disponível no Docker.
 ![conteiner da imagem do mysql](../img/docker_database.png)
 
+O comando usado é o descrito abaixo:
+```bash
+docker run --name meu-mysql \
+  -e MYSQL_ROOT_PASSWORD=password \
+  -e MYSQL_DATABASE=mysqldb \
+  -p 3306:3306 \
+  -d mysql:8
+```
+
 E para visualizar e alterar informações no banco foram usados o MySQL Workbench e o Pentaho.
 
 ## Tabelas do banco de dados
