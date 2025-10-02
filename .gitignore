@@ -1,2 +1,5 @@
 # Ignore mtsql workbench files
 *.mwb*
+
+# Ignore marked files and folders
+_*

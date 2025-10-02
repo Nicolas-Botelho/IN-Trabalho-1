@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `DMs_Locacao`.`Dim_manutencao` (
   `servico_tipo` VARCHAR(45) NULL DEFAULT NULL,
   `custo` DECIMAL(10,2) NULL DEFAULT NULL,
   `data_retorno` DATE NULL DEFAULT NULL,
-  `data_conclusao` DATE NULL DEFAULT NULL,
+  `data_saida` DATE NULL DEFAULT NULL,
   PRIMARY KEY (`idDim_manutencao`))
 ENGINE = InnoDB;
 
